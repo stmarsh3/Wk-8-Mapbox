@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Fly to a location based on scroll position</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+    #map {
+        position: fixed;
+        width: 50%;
+    }
+    #features {
+        width: 50%;
+        margin-left: 50%;
+        font-family: sans-serif;
+        overflow-y: scroll;
+        background-color: #fafafa;
+    }
+    section {
+        padding: 25px 50px;
+        line-height: 25px;
+        border-bottom: 1px solid #ddd;
+        opacity: 0.25;
+        font-size: 13px;
+    }
+    section.active {
+        opacity: 1;
+    }
+    section:last-child {
+        border-bottom: none;
+        margin-bottom: 200px;
+    }
+</style>
+
+<div id="map"></div>
+<div id="features">
+    <section id="minerals" class="active">
+        <h3>Mineral Extraction</h3>
+        <p>
+            One of the main systems of the Laptop starts with the Liquid Crystal display.
+            Also known as the LCD, this system of the laptop is born from materials
+            found in the natural environment.  The journey starts with the extraction of
+            a wide variety of minerals such as; Quarts, Galena, Pyromorphite, Cerussite,
+            Anglesite, Hematite, Cassiterite, and Sphalerite.  These can be found in
+            the mountians of Yaogangxiazhen.
+        </p>
+    </section>
+    <section id="lc">
+        <h3>Liquid Crystals</h3>
+        <p>
+            Leaving our journey in the mountian to a more broad spectrum, we take
+            a look into the primary function of the LCD.  Liquid Crystals are an
+            organic set of rod shaped molecules that make up the middle of
+            every laptop, phone, and t.v. screens.  Liquid Crystals are abundant
+            in any living systems with protein and cell membranes.  A few main
+            systems of extraction are from plants, beetle shells, and human bone.
+        </p>
+    </section>
+    <section id="production1">
+        <h3>Xiamen Precise Display Co.</h3>
+        <p>
+            Along the journey of the LCD production, there are many manufacturing
+            companies primarily located in China and Taiwan.  This stage of the
+            manufacturing process is where the Minerals and Liquid Crystals move
+            into creation of the screen.  The process follows a twenty step method
+            which creates the screen we all stare at daily.
+        </p>
+    </section>
+    <section id="production2">
+        <h3>Taiwan Screen Optronics Co.</h3>
+        <p>
+            Another company of the manufacturing process where Minerals and Liquid
+            Crystals are turned into multiple LCD screens.  Companies use one large
+            sheet of glass, which in turn will make eight individual screens.  There
+            are many different styles of glass manufactured for a range of purposes.
+            Gaming LCD screens are made to withstand a higher definition display, where
+            some screens are of lower quality and can not handle the power of certain
+            programs.  After the screens are complete and put into their casing, the screens
+            are then packed for shipping.
+        </p>
+    </section>
+    <section id="production3">
+        <h3>Micro-Star International Co.</h3>
+        <p>
+            Along the next stage of the production line is the combination of
+            the separate laptop pieces.  For each piece of the laptop, there is a
+            separate path of life that is followed to the final production site.
+            After the LCD is delivered to the manufacturing company, someone takes
+            the separte pieces and connectecs the LCD to the motherboard.
+        </p>
+    </section>
+    <section id="production4">
+        <h3>Microsoft Taiwan</h3>
+        <p>
+            Similar to the manufacturing process of the LCD, the laptop has multiple
+            manufacturing sites.  There are many laptop companies that complete the
+            manufacturing process.  Some are more well known such as Apple and Acer,
+            where some are lesser known such as MSI and Razer.  Though all are different
+            companies, they all produce the same product but with different specs.
+            The next step of the journey is where the laptop is packages and shipped
+            to the millions of retail stores across the planet.
+        </p>
+    </section>
+    <section id="distribution1">
+        <h3>BestBuy</h3>
+        <p>
+            The final stop of the manufacturing and production of the laptop is
+            located generally at major retailers such as BestBuy.  Electronic stores
+            are the primary locations of distribution to the commercial industry for
+            personal consumption.  Other locations such as Walmart or Target are also
+            distributors of laptops.
+        </p>
+    </section>
+    <section id="distribution2">
+        <h3>Apple / Asus</h3>
+        <p>
+            Another source of distribution are chain stores such as Apple.  This
+            is another method of distribution for companies to sell goods under their
+            brand name.  Asus is another example of a company in which you can buy
+            many items from the brand.  Now the journey of the manufacturing process
+            to commercial distribution has come to an end.  Although there is one more
+            stop along this life cycle.
+        </p>
+    </section>
+    <section id="distribution3">
+        <h3>Public Consumption</h3>
+        <p>
+            The final stop along this journey is the public consumption.  Where
+            does the laptop end up?  Following the commercial distribution, people
+            across the globe take these laptops home for personal use.  Another stop
+            for the laptop may even be in Hayes Hall during studio.
+        </p>
+    </section>
+</div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoic3RtYXJzaDMiLCJhIjoiY2t2N2tkZ2I1MTU4czJ5bzg4MGQ0N3dqYyJ9.K1JVmicajSAaFSm7UYoAZA';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-0.15591514, 51.51830379],
+        zoom: .5,
+        bearing: 0,
+        pitch: 0
+    });
+
+    const chapters = {
+        'minerals': {
+            bearing: 0,
+            center: [25.63982, 113.31682],
+            zoom: 15.5,
+            pitch: 20
+        },
+        'lc': {
+            duration: 6000,
+            center: [25.63982, 113.31682],
+            bearing: 0,
+            zoom: 15,
+            pitch: 0
+        },
+        'production1': {
+            bearing: 0,
+            center: [24.51186, 118.11410],
+            zoom: 13,
+            speed: 0.6,
+            pitch: 40
+        },
+        'production2': {
+            bearing: 0,
+            center: [25.00896, 121.48763],
+            zoom: 12.3
+        },
+        'production3': {
+            bearing: 0,
+            center: [25.00835, 121.48763],
+            zoom: 15.3,
+            pitch: 20,
+            speed: 0.5
+        },
+        'production4': {
+            bearing: 0,
+            center: [25.04404, 121.56722],
+            zoom: 12.3
+        },
+        'distribution1': {
+            bearing: 0,
+            center: [42.99820, -78.81549],
+            zoom: 17.3,
+            pitch: 40
+        },
+        'distribution2': {
+            bearing: 0,
+            center: [42.91543, -78.76216],
+            zoom: 14.3,
+            pitch: 20
+        }
+    };
+
+    let activeChapterName = 'minerals';
+    function setActiveChapter(chapterName) {
+        if (chapterName === activeChapterName) return;
+
+        map.flyTo(chapters[chapterName]);
+
+        document.getElementById(chapterName).classList.add('active');
+        document.getElementById(activeChapterName).classList.remove('active');
+
+        activeChapterName = chapterName;
+    }
+
+    function isElementOnScreen(id) {
+        const element = document.getElementById(id);
+        const bounds = element.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
+    }
+
+    // On every scroll event, check which element is on screen
+    window.onscroll = () => {
+        for (const chapterName in chapters) {
+            if (isElementOnScreen(chapterName)) {
+                setActiveChapter(chapterName);
+                break;
+            }
+        }
+    };
+</script>
+
+</body>
+</html>
